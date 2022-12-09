@@ -122,6 +122,7 @@ int main(int argc, char *argv[]) {
     window.setLayout(top);
     window.setWindowTitle("tomeo");
     window.setMinimumSize(800, 680);
+    window.setMaximumSize(1920,1080);
 
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
