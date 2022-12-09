@@ -54,10 +54,10 @@ std::vector<TheButtonInfo> getInfoIn (std::string loc) {
                         out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list
                     }
                     else
-                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << endl;
+                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << Qt::endl;
             }
             else
-                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << endl;
+                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << Qt::endl;
         }
     }
 
@@ -68,7 +68,7 @@ std::vector<TheButtonInfo> getInfoIn (std::string loc) {
 int main(int argc, char *argv[]) {
 
     // let's just check that Qt is operational first
-    qDebug() << "Qt version: " << QT_VERSION_STR << endl;
+    qDebug() << "Qt version: " << QT_VERSION_STR << Qt::endl;
 
     // create the Qt Application
     QApplication app(argc, argv);
@@ -90,6 +90,7 @@ int main(int argc, char *argv[]) {
 
     // the widget that will show the video
     QVideoWidget *videoWidget = new QVideoWidget;
+    videoWidget->update();
 
     // the QMediaPlayer which controls the playback
     ThePlayer *player = new ThePlayer;
@@ -100,8 +101,9 @@ int main(int argc, char *argv[]) {
     // a list of the buttons
     std::vector<TheButton*> buttons;
     // the buttons are arranged horizontally
-    QHBoxLayout *layout = new QHBoxLayout();
+    QBoxLayout *layout = new QVBoxLayout();
     buttonWidget->setLayout(layout);
+
 
 
     // create the four buttons
@@ -118,12 +120,12 @@ int main(int argc, char *argv[]) {
 
     // create the main window and layout
     QWidget window;
-    QVBoxLayout *top = new QVBoxLayout();
+    QHBoxLayout *top = new QHBoxLayout();
     window.setLayout(top);
     window.setWindowTitle("tomeo");
     window.setMinimumSize(800, 680);
     window.setMaximumSize(1920,1080);
-
+//    videoWidget->setGeometry(0,0,videoWidget->x(), videoWidget->y());
     // add the video and the buttons to the top level widget
     top->addWidget(videoWidget);
     top->addWidget(buttonWidget);
