@@ -5,12 +5,13 @@
 #include "the_button.h"
 
 
-void TheButton::init(TheButtonInfo* i) {
+void TheButton::init(TheButtonInfo* i, std::vector<QLabel*> l) {
     setIcon( *(i->icon) );
     info =  i;
+    labels = l;
 }
 
 
 void TheButton::clicked() {
-    emit jumpTo(info);
+    emit jumpTo(info, labels);
 }

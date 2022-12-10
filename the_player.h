@@ -12,6 +12,11 @@
 #include <vector>
 #include <QTimer>
 
+/* header added */
+#include <sstream>
+#include <QtWidgets/QLabel>
+/* end */
+
 class ThePlayer : public QMediaPlayer {
 
 Q_OBJECT
@@ -19,6 +24,7 @@ Q_OBJECT
 private:
     std::vector<TheButtonInfo>* infos;
     std::vector<TheButton*>* buttons;
+    std::vector<QLabel*> labels;
     QTimer* mTimer;
     long updateCount = 0;
 
@@ -36,6 +42,9 @@ public:
     // all buttons have been setup, store pointers here
     void setContent(std::vector<TheButton*>* b, std::vector<TheButtonInfo>* i);
 
+    // set the pointer of the labels
+    void setLabels(std::vector<QLabel*> labels);
+
 private slots:
 
     // change the image and video for one button every one second
@@ -46,7 +55,7 @@ private slots:
 public slots:
 
     // start playing this ButtonInfo
-    void jumpTo (TheButtonInfo* button);
+    void jumpTo (TheButtonInfo* button, std::vector<QLabel*> labels);
 };
 
 #endif //CW2_THE_PLAYER_H
