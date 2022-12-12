@@ -147,9 +147,16 @@ int main(int argc, char *argv[]) {
     window.setWindowTitle("tomeo");
     window.setMinimumSize(800, 680);
 
+    //
+    QWidget *vidInfo = new QWidget();
+    QVBoxLayout *infoVid = new QVBoxLayout();
+    vidInfo->setLayout(infoVid);
+    //
+
     // add the video and the buttons to the top level widget
-    top->addWidget(infoWidget);
-    top->addWidget(videoWidget);
+    infoVid->addWidget(infoWidget);
+    infoVid->addWidget(videoWidget);
+    top->addWidget(vidInfo);
     top->addWidget(buttonWidget);
 
     // showtime!
