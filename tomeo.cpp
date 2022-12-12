@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
     // a list of the buttons
     std::vector<TheButton*> buttons;
     // the buttons are arranged horizontally
-    QHBoxLayout *layout = new QHBoxLayout();
+    QVBoxLayout *layout = new QVBoxLayout();
     buttonWidget->setLayout(layout);
 
     /* Code added */
@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
 
     // create the main window and layout
     QWidget window;
-    QVBoxLayout *top = new QVBoxLayout();
+    QHBoxLayout *top = new QHBoxLayout();
     window.setLayout(top);
     window.setWindowTitle("tomeo");
     window.setMinimumSize(800, 680);
