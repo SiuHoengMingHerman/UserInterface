@@ -30,12 +30,12 @@ private:
 
 public:
     ThePlayer() : QMediaPlayer(NULL) {
-        setVolume(0); // be slightly less annoying
-        connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
+        setVolume(10); // be slightly less annoying
+//        connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
 
-        mTimer = new QTimer(NULL);
-        mTimer->setInterval(1000); // 1000ms is one second between ...
-        mTimer->start();
+//        mTimer = new QTimer(NULL);
+//        mTimer->setInterval(1000); // 1000ms is one second between ...
+//        mTimer->start();
 //        connect( mTimer, SIGNAL (timeout()), SLOT ( shuffle() ) ); // ...running shuffle method
     }
     // all buttons have been setup, store pointers here
@@ -44,17 +44,20 @@ public:
     // set the pointer of the labels
     void setLabels(std::vector<QLabel*> labels);
 
-private slots:
+//private slots:
 
-    // change the image and video for one button every one second
-//    void shuffle();
+//    // change the image and video for one button every one second
+////    void shuffle();
 
-    void playStateChanged (QMediaPlayer::State ms);
+//    void playStateChanged (QMediaPlayer::State ms);
 
 public slots:
 
     // start playing this ButtonInfo
     void jumpTo (TheButtonInfo* button, std::vector<QLabel*> labels);
+    void mPlay();
+    void mPause();
+
 };
 
 #endif //CW2_THE_PLAYER_H

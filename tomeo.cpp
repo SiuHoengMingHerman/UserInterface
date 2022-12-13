@@ -18,6 +18,7 @@
 #include <QtWidgets/QFileIconProvider>
 #include <QDesktopServices>
 #include <QImageReader>
+#include <QStyle>
 #include <QMessageBox>
 #include <QtCore/QDir>
 #include <QtCore/QDirIterator>
@@ -149,6 +150,8 @@ int main(int argc, char *argv[]) {
     infoLayout->addWidget(addressLabel);
     infoLayout->addWidget(sizeLabel);
 
+
+
     player->setLabels(labels);
     /* end */
 
@@ -186,16 +189,33 @@ int main(int argc, char *argv[]) {
 //    QWidget * widget = new QWidget();
 //    scroll->setWidget(widget);
 //    scroll->widget()->setLayout(buttons);
-    QWidget *button_for_play= new QWidget();
-    QPushButton *playbutton = new QPushButton(button_for_play);
-    playbutton->setText("play or stop");
-    playbutton->setFixedSize(200, 50);
+    QBoxLayout *controls = new QHBoxLayout();
+    QWidget *buttonControls= new QWidget();
+    QAbstractButton *pausebutton = new QPushButton(buttonControls);
+    QAbstractButton *playbutton = new QPushButton(buttonControls);
+    QAbstractButton *stopbutton = new QPushButton(buttonControls);
+    pausebutton->setText("||");
+    pausebutton->setFixedSize(50, 50);
+    pausebutton->setShortcut(Qt::Key_Space);
+    playbutton->setText(" ▷ ");
+    playbutton->setFixedSize(50, 50);
+    stopbutton->setText("▣");
+    stopbutton->setFixedSize(50, 50);
+
+    playbutton->connect(playbutton, &QAbstractButton::clicked, player, &QMediaPlayer::play);
+    pausebutton->connect(pausebutton, &QAbstractButton::clicked, player, &ThePlayer::mPause);
+    stopbutton->connect(stopbutton, &QAbstractButton::clicked, player, &QMediaPlayer::stop);
+
+    controls->addWidget(playbutton);
+    controls->addWidget(pausebutton);
+    controls->addWidget(stopbutton);
 
     // add the video and the buttons to the top level widget
     infoVid->addWidget(nameWidget);
     infoVid->addWidget(infoWidget);
     infoVid->addWidget(videoWidget);
-    infoVid->addWidget(playbutton);
+    infoVid->addLayout(controls);
+
     top->addWidget(vidInfo);
     top->addWidget(buttonWidget);
     top->addWidget(scroll);
