@@ -24,6 +24,9 @@
 #include "the_player.h"
 #include "the_button.h"
 
+#include <QScrollArea>
+#include <QPushButton>
+
 
 // read in videos and thumbnails to this directory
 std::vector<TheButtonInfo> getInfoIn (std::string loc) {
@@ -109,27 +112,51 @@ int main(int argc, char *argv[]) {
 
     /* Code added */
     QWidget *infoWidget = new QWidget();
+    QWidget *nameWidget = new QWidget();
+
+
+    //scrolling area
+    QScrollArea *scroll = new QScrollArea();
+    scroll->setWidgetResizable(true);
+    scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    QWidget *sidebar = new QWidget();
+    scroll->setWidget(sidebar);
+    scroll->widget()->setLayout(layout);
+    scroll->setFixedWidth(250);
+
 
     QHBoxLayout *infoLayout = new QHBoxLayout(infoWidget);
+    QHBoxLayout *nameLayout = new QHBoxLayout(nameWidget);
+    //information for the video
 
     infoWidget->setLayout(infoLayout);
-    QLabel *nameLabel = new QLabel("No Name", infoWidget);
+    nameWidget->setLayout(nameLayout);
+
+
+    //name should put it on top
+    QLabel *nameLabel = new QLabel("No Name", nameWidget);
     QLabel *addressLabel = new QLabel("No Address", infoWidget);
     QLabel *sizeLabel = new QLabel("No Size", infoWidget);
+
     std::vector<QLabel*> labels(3);
     labels[0] = nameLabel;
     labels[1] = addressLabel;
     labels[2] = sizeLabel;
 
-    infoLayout->addWidget(nameLabel);
+    nameLayout->addWidget(nameLabel);
+
     infoLayout->addWidget(addressLabel);
     infoLayout->addWidget(sizeLabel);
 
     player->setLabels(labels);
     /* end */
 
+    nameLabel->setAlignment(Qt:: AlignCenter);
+    addressLabel->setAlignment(Qt:: AlignLeft);
+    sizeLabel->setAlignment(Qt:: AlignRight);
     // create the four buttons
-    for ( int i = 0; i < 4; i++ ) {
+    for ( int i = 0; i < 7; i++ ) {
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo*, std::vector<QLabel*>)), player, SLOT (jumpTo(TheButtonInfo*, std::vector<QLabel*>))); // when clicked, tell the player to play.
         buttons.push_back(button);
@@ -140,6 +167,7 @@ int main(int argc, char *argv[]) {
     // tell the player what buttons and videos are available
     player->setContent(&buttons, & videos);
 
+
     // create the main window and layout
     QWidget window;
     QHBoxLayout *top = new QHBoxLayout();
@@ -149,15 +177,28 @@ int main(int argc, char *argv[]) {
 
     //
     QWidget *vidInfo = new QWidget();
+
     QVBoxLayout *infoVid = new QVBoxLayout();
+//    QVBoxLayout *nameVid = new QVBoxLayout();
+//    vidInfo->setLayout(nameVid);
     vidInfo->setLayout(infoVid);
-    //
+
+//    QWidget * widget = new QWidget();
+//    scroll->setWidget(widget);
+//    scroll->widget()->setLayout(buttons);
+    QWidget *button_for_play= new QWidget();
+    QPushButton *playbutton = new QPushButton(button_for_play);
+    playbutton->setText("play or stop");
+    playbutton->setFixedSize(200, 50);
 
     // add the video and the buttons to the top level widget
+    infoVid->addWidget(nameWidget);
     infoVid->addWidget(infoWidget);
     infoVid->addWidget(videoWidget);
+    infoVid->addWidget(playbutton);
     top->addWidget(vidInfo);
     top->addWidget(buttonWidget);
+    top->addWidget(scroll);
 
     // showtime!
     window.show();
