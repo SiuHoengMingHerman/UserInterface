@@ -28,6 +28,8 @@
 #include <QScrollArea>
 #include <QPushButton>
 
+#include <QSlider>
+
 
 // read in videos and thumbnails to this directory
 std::vector<TheButtonInfo> getInfoIn (std::string loc) {
@@ -153,6 +155,11 @@ int main(int argc, char *argv[]) {
 
 
     player->setLabels(labels);
+
+    QSlider *timeline = new QSlider(Qt::Horizontal, videoWidget);
+    timeline->setRange(0,player->duration()/1000);
+    videoWidget->connect(player, SIGNAL(durationChanged(int)), videoWidget, SLOT(setValue(int)));
+    videoWidget->connect(timeline, SIGNAL(sliderMoved(int)), videoWidget, SLOT(seek(int)));
     /* end */
 
     nameLabel->setAlignment(Qt:: AlignCenter);
@@ -217,6 +224,7 @@ int main(int argc, char *argv[]) {
     infoVid->addWidget(infoWidget);
     infoVid->addWidget(videoWidget);
     infoVid->addLayout(controls);
+    infoVid->addWidget(timeline);
 
     top->addWidget(vidInfo);
     top->addWidget(buttonWidget);
