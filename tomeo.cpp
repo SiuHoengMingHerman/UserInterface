@@ -195,13 +195,15 @@ int main(int argc, char *argv[]) {
     QAbstractButton *playbutton = new QPushButton(buttonControls);
     QAbstractButton *stopbutton = new QPushButton(buttonControls);
     pausebutton->setText("||");
-    pausebutton->setFixedSize(50, 50);
-    pausebutton->setShortcut(Qt::Key_Space);
+    pausebutton->setFixedSize(20, 20);
     playbutton->setText(" ▷ ");
-    playbutton->setFixedSize(50, 50);
+    playbutton->setFixedSize(20, 20);
     stopbutton->setText("▣");
-    stopbutton->setFixedSize(50, 50);
+    stopbutton->setFixedSize(20, 20);
 
+    pausebutton->setShortcut(Qt::Key_B);
+    playbutton->setShortcut(Qt::Key_N);
+    stopbutton->setShortcut(Qt::Key_M);
     playbutton->connect(playbutton, &QAbstractButton::clicked, player, &QMediaPlayer::play);
     pausebutton->connect(pausebutton, &QAbstractButton::clicked, player, &ThePlayer::mPause);
     stopbutton->connect(stopbutton, &QAbstractButton::clicked, player, &QMediaPlayer::stop);
