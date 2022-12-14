@@ -49,3 +49,25 @@ void ThePlayer::mPause(){
 void ThePlayer::mPlay(){
     play();
 }
+
+void ThePlayer::seek(int seconds)
+{
+    this->setPosition(seconds*1000);
+}
+
+int ThePlayer::mduration()
+{
+    return duration();
+}
+
+void ThePlayer::durationChanged(qint64 duration)
+{
+    m_duration = duration / 1000;
+    m_slider->setMaximum(m_duration);
+}
+
+//void ThePlayer::positionChanged(qint64 progress)
+//{
+//    if (!m_slider->isSliderDown())
+//        m_slider->setValue(progress / 1000);
+//}

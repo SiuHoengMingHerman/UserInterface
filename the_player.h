@@ -14,7 +14,7 @@
 
 /* header added */
 #include <sstream>
-#include <QtWidgets/QLabel>
+#include <QtWidgets>
 /* end */
 
 class ThePlayer : public QMediaPlayer {
@@ -31,7 +31,10 @@ private:
 public:
     ThePlayer() : QMediaPlayer(NULL) {
         setVolume(10); // be slightly less annoying
-//        connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
+        m_player = new QMediaPlayer(this);
+        connect(m_player, &QMediaPlayer::durationChanged, this, &ThePlayer::durationChanged);
+        connect(m_player, &QMediaPlayer::positionChanged, this, &ThePlayer::positionChanged);
+//       connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
 
 //        mTimer = new QTimer(NULL);
 //        mTimer->setInterval(1000); // 1000ms is one second between ...
@@ -57,7 +60,15 @@ public slots:
     void jumpTo (TheButtonInfo* button, std::vector<QLabel*> labels);
     void mPlay();
     void mPause();
+    void seek(int seconds);
+    int mduration();
+    void durationChanged(qint64 duration);
+//    void positionChanged(qint64 progress);
 
+private:
+    QMediaPlayer *m_player = nullptr;
+    QSlider *m_slider = nullptr;
+    qint64 m_duration;
 };
 
 #endif //CW2_THE_PLAYER_H

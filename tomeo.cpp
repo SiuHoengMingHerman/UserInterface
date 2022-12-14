@@ -157,9 +157,10 @@ int main(int argc, char *argv[]) {
     player->setLabels(labels);
 
     QSlider *timeline = new QSlider(Qt::Horizontal, videoWidget);
-    timeline->setRange(0,player->duration()/1000);
-    videoWidget->connect(player, SIGNAL(durationChanged(int)), videoWidget, SLOT(setValue(int)));
-    videoWidget->connect(timeline, SIGNAL(sliderMoved(int)), videoWidget, SLOT(seek(int)));
+    timeline->setRange(0,player->mduration()/1000);
+    videoWidget->connect(timeline, &QSlider::sliderMoved, player, &ThePlayer::seek);
+//    videoWidget->connect(player, &QMediaPlayer::durationChanged, player, &ThePlayer::durationChanged);
+//    videoWidget->connect(player, &QMediaPlayer::positionChanged, player, &ThePlayer::positionChanged);
     /* end */
 
     nameLabel->setAlignment(Qt:: AlignCenter);
@@ -189,6 +190,8 @@ int main(int argc, char *argv[]) {
     QWidget *vidInfo = new QWidget();
 
     QVBoxLayout *infoVid = new QVBoxLayout();
+
+    QHBoxLayout *info = new QHBoxLayout();
 //    QVBoxLayout *nameVid = new QVBoxLayout();
 //    vidInfo->setLayout(nameVid);
     vidInfo->setLayout(infoVid);
@@ -196,35 +199,59 @@ int main(int argc, char *argv[]) {
 //    QWidget * widget = new QWidget();
 //    scroll->setWidget(widget);
 //    scroll->widget()->setLayout(buttons);
+
+    QMessageBox dropdown;
+    dropdown.setText("info your mom");
+
     QBoxLayout *controls = new QHBoxLayout();
     QWidget *buttonControls= new QWidget();
     QAbstractButton *pausebutton = new QPushButton(buttonControls);
     QAbstractButton *playbutton = new QPushButton(buttonControls);
     QAbstractButton *stopbutton = new QPushButton(buttonControls);
+    QAbstractButton *fullbutton = new QPushButton(buttonControls);
+    QAbstractButton *infobutton = new QPushButton(buttonControls);
+
     pausebutton->setText("||");
     pausebutton->setFixedSize(20, 20);
     playbutton->setText(" ▷ ");
     playbutton->setFixedSize(20, 20);
     stopbutton->setText("▣");
     stopbutton->setFixedSize(20, 20);
+    fullbutton->setText("⤢");
+    fullbutton->setFixedSize(20, 20);
+    infobutton->setText("ⓘ");
+    infobutton->setFixedSize(20, 20);
 
     pausebutton->setShortcut(Qt::Key_B);
     playbutton->setShortcut(Qt::Key_N);
     stopbutton->setShortcut(Qt::Key_M);
+    fullbutton->setShortcut(Qt::Key_F);
+    infobutton->setShortcut(Qt::Key_I);
     playbutton->connect(playbutton, &QAbstractButton::clicked, player, &QMediaPlayer::play);
     pausebutton->connect(pausebutton, &QAbstractButton::clicked, player, &ThePlayer::mPause);
     stopbutton->connect(stopbutton, &QAbstractButton::clicked, player, &QMediaPlayer::stop);
+    fullbutton->connect(fullbutton, &QAbstractButton::clicked, videoWidget, &QVideoWidget::setFullScreen);
+    infobutton->connect(infobutton, &QAbstractButton::clicked, infobutton, &QPushButton::setChecked);
+    if(infobutton->isChecked())
+        dropdown.exec();
+    videoWidget->connect(videoWidget, &QVideoWidget::fullScreenChanged, fullbutton, &QPushButton::setChecked);
+    if (fullbutton->isChecked())
+        videoWidget->setFullScreen(true);
 
     controls->addWidget(playbutton);
     controls->addWidget(pausebutton);
     controls->addWidget(stopbutton);
+    controls->addWidget(fullbutton);
 
     // add the video and the buttons to the top level widget
-    infoVid->addWidget(nameWidget);
+    info->addWidget(nameWidget);
+    info->addWidget(infobutton);
+    infoVid->addLayout(info);
     infoVid->addWidget(infoWidget);
     infoVid->addWidget(videoWidget);
-    infoVid->addLayout(controls);
     infoVid->addWidget(timeline);
+    infoVid->addLayout(controls);
+
 
     top->addWidget(vidInfo);
     top->addWidget(buttonWidget);
