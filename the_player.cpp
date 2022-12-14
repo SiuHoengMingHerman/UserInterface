@@ -52,10 +52,10 @@ void ThePlayer::mPlay(){
 
 void ThePlayer::seek(int seconds)
 {
-    this->setPosition(seconds*1000);
+    this->setPosition(seconds * 1000);
 }
 
-int ThePlayer::mduration()
+qint64 ThePlayer::mduration()
 {
     return duration();
 }
@@ -66,8 +66,26 @@ void ThePlayer::durationChanged(qint64 duration)
     m_slider->setMaximum(m_duration);
 }
 
+void ThePlayer::mfullScreen(QVideoWidget *thing)
+{
+    if(thing->isFullScreen() == false)
+    {
+        thing->setFullScreen(true);
+    }
+    else{
+        thing->setFullScreen(false);
+    }
+}
+
+void ThePlayer::showDuration(QSlider *time, qint64 progress)
+{
+   time->setValue(progress/1000);
+}
+//void ThePlayer::dropInfo(QMessageBox *yes)
+//{
+//    yes->open();
+//}
 //void ThePlayer::positionChanged(qint64 progress)
 //{
-//    if (!m_slider->isSliderDown())
 //        m_slider->setValue(progress / 1000);
 //}

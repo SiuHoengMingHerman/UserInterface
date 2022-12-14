@@ -15,6 +15,7 @@
 /* header added */
 #include <sstream>
 #include <QtWidgets>
+#include <QVideoWidget>
 /* end */
 
 class ThePlayer : public QMediaPlayer {
@@ -61,8 +62,11 @@ public slots:
     void mPlay();
     void mPause();
     void seek(int seconds);
-    int mduration();
+    qint64 mduration();
     void durationChanged(qint64 duration);
+    void mfullScreen(QVideoWidget *thing);
+    void showDuration(QSlider *time, qint64 progress);
+//    void dropInfo(QMessageBox *yes);
 //    void positionChanged(qint64 progress);
 
 private:
