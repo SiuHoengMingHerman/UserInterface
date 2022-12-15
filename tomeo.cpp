@@ -207,14 +207,20 @@ int main(int argc, char *argv[]) {
 //    scroll->widget()->setLayout(buttons);
 
     //QMessageBox *dropdown;
-
+    QBoxLayout *fullscreen = new QHBoxLayout();
     QBoxLayout *controls = new QHBoxLayout();
+    QBoxLayout *bottombar = new QHBoxLayout();
     QWidget *buttonControls= new QWidget();
     QAbstractButton *pausebutton = new QPushButton(buttonControls);
     QAbstractButton *playbutton = new QPushButton(buttonControls);
     QAbstractButton *stopbutton = new QPushButton(buttonControls);
     QAbstractButton *fullbutton = new QPushButton(buttonControls);
     QAbstractButton *infobutton = new QPushButton(buttonControls);
+    QAbstractButton *saveButton = new QPushButton(buttonControls);
+    QAbstractButton *colorButton = new QPushButton(buttonControls);
+
+//    QPalette p = pausebutton->palette();
+//    p.setColor(pausebutton->backgroundRole(), Qt::black);
 
     pausebutton->setText("||");
     pausebutton->setFixedSize(20, 20);
@@ -226,18 +232,25 @@ int main(int argc, char *argv[]) {
     fullbutton->setFixedSize(20, 20);
     infobutton->setText("ⓘ");
     infobutton->setFixedSize(30, 30);
+    saveButton->setText("Save");
+    saveButton->setFixedSize(60, 30);
+    colorButton->setText("Color Options");
+    colorButton->setFixedSize(100,20);
 
     pausebutton->setShortcut(Qt::Key_B);
     playbutton->setShortcut(Qt::Key_N);
     stopbutton->setShortcut(Qt::Key_M);
     fullbutton->setShortcut(Qt::Key_F);
     infobutton->setShortcut(Qt::Key_I);
+    colorButton->setShortcut(Qt::Key_C);
 
     infobutton->setToolTip("video information");
     playbutton->connect(playbutton, &QAbstractButton::clicked, player, &QMediaPlayer::play);
     pausebutton->connect(pausebutton, &QAbstractButton::clicked, player, &ThePlayer::mPause);
     stopbutton->connect(stopbutton, &QAbstractButton::clicked, player, &QMediaPlayer::stop);
     QObject::connect(fullbutton, &QAbstractButton::clicked, player, [&player, &videoWidget]() {player->mfullScreen(videoWidget);});
+    infobutton->connect(infobutton, &QAbstractButton::clicked, player, [&player, &nameLabel, &addressLabel, &sizeLabel](){player->showInfo(nameLabel, addressLabel, sizeLabel);});
+    colorButton->connect(colorButton, &QAbstractButton::clicked, player, [&player, &videoWidget](){player->showColorDialog(videoWidget);});
 //    fullbutton->connect(fullbutton, &QAbstractButton::clicked, videoWidget, &QVideoWidget::setFullScreen);
 //    videoWidget->connect(videoWidget, &QVideoWidget::fullScreenChanged, fullbutton, &QPushButton::setChecked);
 //    if (fullbutton->isChecked())
@@ -246,26 +259,40 @@ int main(int argc, char *argv[]) {
 //    infobutton->connect(infobutton, &QAbstractButton::clicked, infobutton, &QPushButton::setChecked);
 //    if(infobutton->isChecked())
 //        dropdown.exec();
-
+    //controls->setAlignment(Qt::AlignCenter);
+    //bottombar->setAlignment(Qt::AlignCenter);
+    fullscreen->setAlignment(Qt::AlignRight);
     controls->addWidget(playbutton);
     controls->addWidget(pausebutton);
     controls->addWidget(stopbutton);
-    controls->addWidget(fullbutton);
-
+    controls->addWidget(colorButton);
+    fullscreen->addWidget(fullbutton);
+    bottombar->addLayout(controls);
+    bottombar->addLayout(fullscreen);
+    //controls->addLayout(fullscreen);
     // add the video and the buttons to the top level widget
     info->addWidget(nameWidget);
+    info->addWidget(saveButton);
     info->addWidget(infobutton);
     infoVid->addLayout(info);
     infoVid->addWidget(infoWidget);
     infoVid->addWidget(videoWidget);
     infoVid->addWidget(timeline);
-    infoVid->addLayout(controls);
-
+    infoVid->addLayout(bottombar);
 
     top->addWidget(vidInfo);
     top->addWidget(buttonWidget);
     top->addWidget(scroll);
-
+    //window.setBackgroundRole(QColor::red(100));
+//    QRadialGradient radialGrad(QPointF(100,100),100);
+//    radialGrad.setColorAt(0, Qt::red);
+//    radialGrad.setColorAt(0.5, Qt::blue);
+//    radialGrad.setColorAt(1, Qt::green);
+//    QPalette p = window.palette();
+//    p.setColor(window.backgroundRole(), Qt::yellow);
+//    window.setStyleSheet("* {color: qlineargradient(spread:pad, x1:0 y1:0, x2:1 y2:1, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));"
+//                       "background: qlineargradient( x1:0 y1:0, x2:1 y2:1, stop:0 cyan , stop:1 blue);}");
+//    window.setPalette(p);
     // showtime!
     window.show();
 

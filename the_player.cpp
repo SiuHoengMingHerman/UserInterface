@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by twak on 11/11/2019.
 //
 
@@ -88,4 +88,68 @@ void ThePlayer::showDuration(QSlider *time, qint64 progress)
 void ThePlayer::positionChanged(qint64 progress)
 {
         m_slider->setValue(progress / 1000);
+}
+
+void ThePlayer::showInfo(QLabel *name, QLabel *address, QLabel *size)
+{
+    if(!infoBox)
+    {
+        QBoxLayout *infolayout = new QVBoxLayout;
+        QPushButton *button = new QPushButton(tr("Close"));
+        infolayout->addWidget(name);
+        infolayout->addWidget(address);
+        infolayout->addWidget(size);
+        infolayout->addWidget(button);
+
+        infoBox = new QDialog();
+        infoBox->setWindowTitle(tr("Video Information"));
+        infoBox->setLayout(infolayout);
+
+        connect(button, &QPushButton::clicked, infoBox, &QDialog::close);
+    }
+    infoBox->show();
+}
+void ThePlayer::showColorDialog(QVideoWidget *m_videoWidget)
+{
+    if (!dialogBox) {
+        QSlider *brightnessSlider = new QSlider(Qt::Horizontal);
+        brightnessSlider->setRange(-100, 100);
+        brightnessSlider->setValue(m_videoWidget->brightness());
+        connect(brightnessSlider, &QSlider::sliderMoved, m_videoWidget, &QVideoWidget::setBrightness);
+        connect(m_videoWidget, &QVideoWidget::brightnessChanged, brightnessSlider, &QSlider::setValue);
+
+        QSlider *contrastSlider = new QSlider(Qt::Horizontal);
+        contrastSlider->setRange(-100, 100);
+        contrastSlider->setValue(m_videoWidget->contrast());
+        connect(contrastSlider, &QSlider::sliderMoved, m_videoWidget, &QVideoWidget::setContrast);
+        connect(m_videoWidget, &QVideoWidget::contrastChanged, contrastSlider, &QSlider::setValue);
+
+        QSlider *hueSlider = new QSlider(Qt::Horizontal);
+        hueSlider->setRange(-100, 100);
+        hueSlider->setValue(m_videoWidget->hue());
+        connect(hueSlider, &QSlider::sliderMoved, m_videoWidget, &QVideoWidget::setHue);
+        connect(m_videoWidget, &QVideoWidget::hueChanged, hueSlider, &QSlider::setValue);
+
+        QSlider *saturationSlider = new QSlider(Qt::Horizontal);
+        saturationSlider->setRange(-100, 100);
+        saturationSlider->setValue(m_videoWidget->saturation());
+        connect(saturationSlider, &QSlider::sliderMoved, m_videoWidget, &QVideoWidget::setSaturation);
+        connect(m_videoWidget, &QVideoWidget::saturationChanged, saturationSlider, &QSlider::setValue);
+
+        QFormLayout *layout = new QFormLayout;
+        layout->addRow(tr("Brightness"), brightnessSlider);
+        layout->addRow(tr("Contrast"), contrastSlider);
+        layout->addRow(tr("Hue"), hueSlider);
+        layout->addRow(tr("Saturation"), saturationSlider);
+
+        QPushButton *button = new QPushButton(tr("Close"));
+        layout->addRow(button);
+
+        dialogBox = new QDialog();
+        dialogBox->setWindowTitle(tr("Color Options"));
+        dialogBox->setLayout(layout);
+
+        connect(button, &QPushButton::clicked, dialogBox, &QDialog::close);
+    }
+    dialogBox->show();
 }

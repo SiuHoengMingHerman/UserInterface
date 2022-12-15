@@ -16,6 +16,7 @@
 #include <sstream>
 #include <QtWidgets>
 #include <QVideoWidget>
+#include <QDialog>
 /* end */
 
 class ThePlayer : public QMediaPlayer {
@@ -68,11 +69,15 @@ public slots:
     void showDuration(QSlider *time, qint64 progress);
 //    void dropInfo(QMessageBox *yes);
     void positionChanged(qint64 progress);
+    void showColorDialog(QVideoWidget *m_videoWidget);
+    void showInfo(QLabel *name, QLabel *address, QLabel *size);
 
 private:
     QMediaPlayer *m_player = nullptr;
     QSlider *m_slider = nullptr;
     qint64 m_duration;
+    QDialog *dialogBox = nullptr;
+    QDialog *infoBox = nullptr;
 };
 
 #endif //CW2_THE_PLAYER_H
