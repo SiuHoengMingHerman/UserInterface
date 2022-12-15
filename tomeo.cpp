@@ -157,6 +157,63 @@ int main(int argc, char *argv[]) {
     player->setLabels(labels);
 
     QSlider *timeline = new QSlider(Qt::Horizontal, videoWidget);
+    timeline->setStyleSheet(    "QSlider::groove:horizontal {"
+                                "border: 1px solid #bbb;"
+                                "background: white;"
+                                "height: 10px;"
+                                "border-radius: 4px;"
+                                "}"
+                                "QSlider::sub-page:horizontal {"
+                                "background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,"
+                                    "stop: 0 red, stop: 1 purple);"
+                                "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,"
+                                    "stop: 0 red, stop: 1 cyan);"
+                                "border: 1px solid #777;"
+                                "height: 10px;"
+                                "border-radius: 4px;"
+                                "}"
+                                "QSlider::add-page:horizontal {"
+                                "background: #fff;"
+                                "border: 1px solid #777;"
+                                "height: 10px;"
+                                "border-radius: 4px;"
+                                "}"
+                                "QSlider::handle:horizontal {"
+                                "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
+                                    "stop:0 #eee, stop:1 #ccc);"
+                                "border: 1px solid #777;"
+                                "width: 13px;"
+                                "margin-top: -2px;"
+                                "margin-bottom: -2px;"
+                                "border-radius: 4px;"
+                                "}"
+                                "QSlider::handle:horizontal:hover {"
+                                "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,"
+                                   " stop:0 #fff, stop:1 #ddd);"
+                                "border: 1px solid #444;"
+                                "border-radius: 4px;"
+                                "}"
+                                "QSlider::sub-page:horizontal:disabled {"
+                                "background: #bbb;"
+                                "border-color: #999;"
+                                "}"
+                                "QSlider::add-page:horizontal:disabled {"
+                                "background: #eee;"
+                                "border-color: #999;"
+                                "}"
+                                "QSlider::handle:horizontal:disabled {"
+                                "background: #eee;"
+                                "border: 1px solid #aaa;"
+                                "border-radius: 4px;"
+                                "}");
+/*"QSlider::horizontal {background-color: grey;}"
+                             "QSlider::add-page:horizontal{background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,"
+                                                          "stop: 0 #66e, stop: 1 #bbf);"
+                                                          "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,"
+                                                          "stop: 0 #bbf, stop: 1 #55f);"
+                                                          "border: 1px solid #777;"
+                                                          "height: 10px;"
+//                                                          "border-radius: 4px;}"*/
 //    timeline->setMaximum(player->mduration()/1000);
 //    timeline->setRange(0,player->mduration()/1000);
     player->connect(player, &QMediaPlayer::positionChanged, timeline, [&timeline, &player](){timeline->setValue(player->position()/500);});
@@ -219,8 +276,30 @@ int main(int argc, char *argv[]) {
     QAbstractButton *saveButton = new QPushButton(buttonControls);
     QAbstractButton *colorButton = new QPushButton(buttonControls);
 
-//    QPalette p = pausebutton->palette();
-//    p.setColor(pausebutton->backgroundRole(), Qt::black);
+//    QPalette pause = pausebutton->palette();
+//    QPalette play = playbutton->palette();
+//    QPalette stop = stopbutton->palette();
+//    QPalette full = fullbutton->palette();
+//    QPalette infob = infobutton->palette();
+//    QPalette save = saveButton->palette();
+//    QPalette color = colorButton->palette();
+
+//    pause.setColor(pausebutton->backgroundRole(), Qt::red);
+//    play.setColor(playbutton->backgroundRole(), Qt::red);
+//    stop.setColor(stopbutton->backgroundRole(), Qt::red);
+//    full.setColor(fullbutton->backgroundRole(), Qt::red);
+//    infob.setColor(infobutton->backgroundRole(), Qt::red);
+//    save.setColor(saveButton->backgroundRole(), Qt::red);
+//    color.setColor(colorButton->backgroundRole(), Qt::red);
+
+//    pausebutton->setPalette(pause);
+//    playbutton->setPalette(play);
+//    stopbutton->setPalette(stop);
+//    fullbutton->setPalette(full);
+//    infobutton->setPalette(infob);
+//    saveButton->setPalette(save);
+//    colorButton->setPalette(color);
+
 
     pausebutton->setText("||");
     pausebutton->setFixedSize(20, 20);
@@ -262,8 +341,8 @@ int main(int argc, char *argv[]) {
     //controls->setAlignment(Qt::AlignCenter);
     //bottombar->setAlignment(Qt::AlignCenter);
     fullscreen->setAlignment(Qt::AlignRight);
-    controls->addWidget(playbutton);
     controls->addWidget(pausebutton);
+    controls->addWidget(playbutton);
     controls->addWidget(stopbutton);
     controls->addWidget(colorButton);
     fullscreen->addWidget(fullbutton);
@@ -290,8 +369,8 @@ int main(int argc, char *argv[]) {
 //    radialGrad.setColorAt(1, Qt::green);
 //    QPalette p = window.palette();
 //    p.setColor(window.backgroundRole(), Qt::yellow);
-//    window.setStyleSheet("* {color: qlineargradient(spread:pad, x1:0 y1:0, x2:1 y2:1, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));"
-//                       "background: qlineargradient( x1:0 y1:0, x2:1 y2:1, stop:0 cyan , stop:1 blue);}");
+    window.setStyleSheet("* {color: qlineargradient(spread:pad, x1:0.5 y1:0, x2:0.5 y2:0.5, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));"
+                       "background: qlineargradient( x1:0.5 y1:0, x2:0.5 y2:0.5, stop:0 grey , stop:1 black);}");
 //    window.setPalette(p);
     // showtime!
     window.show();
