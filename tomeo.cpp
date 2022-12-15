@@ -160,6 +160,7 @@ int main(int argc, char *argv[]) {
 //    timeline->setMaximum(player->mduration()/1000);
 //    timeline->setRange(0,player->mduration()/1000);
     player->connect(player, &QMediaPlayer::positionChanged, timeline, [&timeline, &player](){timeline->setValue(player->position()/500);});
+    player->connect(player, &QMediaPlayer::durationChanged, timeline, [&timeline, &player](){timeline->setMaximum(player->duration()/500);});
     QObject::connect(timeline, &QSlider::sliderMoved, player, &ThePlayer::seek);
 //    videoWidget->connect(player, &QMediaPlayer::durationChanged, player, &ThePlayer::durationChanged);
 //    videoWidget->connect(player, &QMediaPlayer::positionChanged, player, &ThePlayer::positionChanged);
@@ -215,7 +216,7 @@ int main(int argc, char *argv[]) {
     QAbstractButton *fullbutton = new QPushButton(buttonControls);
     QAbstractButton *infobutton = new QPushButton(buttonControls);
 
-    pausebutton->setText("⏸︎");
+    pausebutton->setText("||");
     pausebutton->setFixedSize(20, 20);
     playbutton->setText(" ▷ ");
     playbutton->setFixedSize(20, 20);

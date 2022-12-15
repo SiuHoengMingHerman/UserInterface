@@ -63,7 +63,7 @@ public slots:
     void mPause();
     void seek(int seconds);
     qint64 mduration();
-    void durationChanged(qint64 duration);
+    void mdurationChanged(qint64 duration, QSlider *slider);
     void mfullScreen(QVideoWidget *thing);
     void showDuration(QSlider *time, qint64 progress);
 //    void dropInfo(QMessageBox *yes);

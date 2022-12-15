@@ -60,10 +60,10 @@ qint64 ThePlayer::mduration()
     return duration();
 }
 
-void ThePlayer::durationChanged(qint64 duration)
+void ThePlayer::mdurationChanged(qint64 duration, QSlider *slider)
 {
-    m_duration = duration / 1000;
-    m_slider->setMaximum(m_duration);
+    m_duration = duration / 500;
+    slider->setMaximum(m_duration);
 }
 
 void ThePlayer::mfullScreen(QVideoWidget *thing)
