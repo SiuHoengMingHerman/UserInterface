@@ -67,7 +67,7 @@ public slots:
     void mfullScreen(QVideoWidget *thing);
     void showDuration(QSlider *time, qint64 progress);
 //    void dropInfo(QMessageBox *yes);
-//    void positionChanged(qint64 progress);
+    void positionChanged(qint64 progress);
 
 private:
     QMediaPlayer *m_player = nullptr;

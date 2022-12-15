@@ -159,10 +159,13 @@ int main(int argc, char *argv[]) {
     QSlider *timeline = new QSlider(Qt::Horizontal, videoWidget);
 //    timeline->setMaximum(player->mduration()/1000);
 //    timeline->setRange(0,player->mduration()/1000);
-    player->connect(player, &QMediaPlayer::positionChanged, timeline, [&timeline, &player](){timeline->setValue(player->position()/1000);});
+    player->connect(player, &QMediaPlayer::positionChanged, timeline, [&timeline, &player](){timeline->setValue(player->position()/500);});
     QObject::connect(timeline, &QSlider::sliderMoved, player, &ThePlayer::seek);
 //    videoWidget->connect(player, &QMediaPlayer::durationChanged, player, &ThePlayer::durationChanged);
 //    videoWidget->connect(player, &QMediaPlayer::positionChanged, player, &ThePlayer::positionChanged);
+
+//video a 17sec
+//video b 25sec
     /* end */
 
     nameLabel->setAlignment(Qt:: AlignCenter);

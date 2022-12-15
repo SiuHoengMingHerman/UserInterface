@@ -83,9 +83,9 @@ void ThePlayer::showDuration(QSlider *time, qint64 progress)
 }
 //void ThePlayer::dropInfo(QMessageBox *yes)
 //{
-//    yes->open();
+//    yes->open();s
 //}
-//void ThePlayer::positionChanged(qint64 progress)
-//{
-//        m_slider->setValue(progress / 1000);
-//}
+void ThePlayer::positionChanged(qint64 progress)
+{
+        m_slider->setValue(progress / 1000);
+}
