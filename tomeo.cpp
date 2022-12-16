@@ -313,7 +313,7 @@ int main(int argc, char *argv[]) {
     infobutton->setFixedSize(30, 30);
     saveButton->setText("Save");
     saveButton->setFixedSize(60, 30);
-    colorButton->setText("Color Options");
+    colorButton->setText("Edit...");
     colorButton->setFixedSize(100,20);
 
     pausebutton->setShortcut(Qt::Key_B);
