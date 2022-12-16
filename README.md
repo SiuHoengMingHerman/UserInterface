@@ -18,8 +18,8 @@
 - Scroll bar for the videos
 
 # KeyBinds:
-Play: B
-Pause: N
-Stop: M
-FullScreen: F
-Information: I
+- Play: B
+- Pause: N
+- Stop: M
+- FullScreen: F
+- Information: I
